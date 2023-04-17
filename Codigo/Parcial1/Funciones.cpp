@@ -30,4 +30,25 @@ void escribirEnArchivo(char* texto, char* nombreArchivo, unsigned long long long
         cout << "Error al abrir el archivo " << nombreArchivo << endl;
     }
 }
+void separarPorPuntoComa(char* archivoEntrada, char* archivoSalida) {
+    ifstream archivo(archivoEntrada); // Abrimos el archivo de entrada
+    ofstream archivoSeparado(archivoSalida); // Creamos el archivo de salida
 
+    if (archivo.is_open() && archivoSeparado.is_open()) {
+        char c;
+        while (archivo.get(c)) { // Leemos el archivo de entrada caracter por caracter
+            if (c == ';') {
+                archivoSeparado << '\n'; // Si encontramos un punto y coma, insertamos un salto de línea en el archivo de salida
+            }
+            else {
+                archivoSeparado << c; // Si no encontramos un punto y coma, escribimos el caracter en el archivo de salida
+            }
+        }
+        archivo.close(); // Cerramos el archivo de entrada
+        archivoSeparado.close(); // Cerramos el archivo de salida
+        cout << "El archivo se ha separado correctamente." << endl;
+    }
+    else {
+        cout << "No se pudo abrir uno de los archivos." << endl;
+    }
+}
