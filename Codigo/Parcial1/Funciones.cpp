@@ -30,26 +30,39 @@ void escribirEnArchivo(char* texto, const char* nombreArchivo, unsigned long lon
         cout << "Error al abrir el archivo " << nombreArchivo << endl;
     }
 }
-void separarPorPuntoComa(char* archivoEntrada, char* archivoSalida) {
-    ifstream archivo(archivoEntrada); // Abrimos el archivo de entrada
-    ofstream archivoSeparado(archivoSalida); // Creamos el archivo de salida
-    if (archivo.is_open() && archivoSeparado.is_open()) {
-        char c;
-        while (archivo.get(c)) { // Leemos el archivo de entrada caracter por caracter
-            if (c == ';') {
-                archivoSeparado << '\n'; // Si encontramos un punto y coma, insertamos un salto de línea en el archivo de salida
-            }
-            else {
-                archivoSeparado << c; // Si no encontramos un punto y coma, escribimos el caracter en el archivo de salida
-            }
+
+char* separarCadena(char *cadena, char delimitador) {
+    static char *siguiente;
+    if (cadena != NULL) {
+        siguiente = cadena;
+    }
+    if (siguiente == NULL || *siguiente == '\0') {
+        return NULL;
+    }
+    char *resultado = siguiente;
+    while (*siguiente != delimitador && *siguiente != '\0') {
+        siguiente++;
+    }
+    if (*siguiente != '\0') {
+        *siguiente = '\0';
+        siguiente++;
+    }
+    return resultado;
+}
+
+bool comparar(char *cadena1, char *cadena2)
+{
+    bool iguales=true;
+    if (len_cadena(cadena1)!=len_cadena(cadena2)){
+        iguales = false;
+    }
+    for (int i=0; i < short(len_cadena(cadena1));i++){
+        if (cadena1[i]!=cadena2[i]){
+            iguales = false;
+            break;
         }
-        archivo.close(); // Cerramos el archivo de entrada
-        archivoSeparado.close(); // Cerramos el archivo de salida
-        cout << "El archivo se ha separado correctamente." << endl;
     }
-    else {
-        cout << "No se pudo abrir uno de los archivos." << endl;
-    }
+    return iguales;
 }
 
 

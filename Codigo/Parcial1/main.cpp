@@ -16,7 +16,7 @@ int main()
         cin >> opcion;
         system("cls");
         switch (opcion) {
-            case 1:
+        case 1:
             char codigo[7], Nombre_materia[50], creditos[2], HTD[2], Horas_ind[2];
             cout << "Para registrar una materia debes tener en cuenta el codigo, el nombre de la materia, y el numero de creditos" << endl;
             cout << "Ingrese el codigo de la materia:";
@@ -29,14 +29,26 @@ int main()
             cin >> HTD;
             Horas_ind[0]=HTI(creditos,HTD);
             formato(codigo, Nombre_materia, HTD, Horas_ind, creditos, Narchivo);
+            cout << "La materia ha sido guardada en la base de datos" << endl;
+            break;
+        case 2:
+            char C_codigo[7], Horario[10];
+            cout << "Ingrese el codigo de la materia para registrar el horario:";
+            cin >> C_codigo;
+            unsigned long long longitud=hallar_len(Narchivo);
+            char *cadena=new char[longitud];
+            leer_archivo(Narchivo,cadena,longitud);
+            char *token = separarCadena(cadena, ';');
+            while (token!=NULL){
+                if (comparar(token,C_codigo)){
+                    cout << "Ingrese el horario que tiene dicha materia:";
+                    cin >> Horario;
+                }
+                token = separarCadena(NULL, '.');
+                token= separarCadena(NULL, ';');
+            }
         }
+
     }
-//    int longitud=hallar_len(Narchivo);
-//    char *texto=new char[longitud];
-//    texto[longitud]='\0';
-//    leer_archivo(Narchivo,texto,longitud);
-//    cout << texto << endl;
-//    char registrar[]="curso nuevo;151;";
-//    escribirEnArchivo(registrar,"Materias.txt",longitud);
     return 0;
 }
