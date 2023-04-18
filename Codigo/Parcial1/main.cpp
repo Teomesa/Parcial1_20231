@@ -6,6 +6,7 @@ int main()
 {
     int opcion = 0;
     const char *Narchivo="Materias.txt";
+    const char *Narchivo2= "Horario.txt";
     while (opcion != 4) {
         cout << "Menu de opciones:" << endl;
         cout << "1. Registrar materias" << endl;
@@ -32,21 +33,11 @@ int main()
             cout << "La materia ha sido guardada en la base de datos" << endl;
             break;
         case 2:
-            char C_codigo[7], Horario[10];
+            char C_codigo[8];
             cout << "Ingrese el codigo de la materia para registrar el horario:";
             cin >> C_codigo;
-            unsigned long long longitud=hallar_len(Narchivo);
-            char *cadena=new char[longitud];
-            leer_archivo(Narchivo,cadena,longitud);
-            char *token = separarCadena(cadena, ';');
-            while (token!=NULL){
-                if (comparar(token,C_codigo)){
-                    cout << "Ingrese el horario que tiene dicha materia:";
-                    cin >> Horario;
-                }
-                token = separarCadena(NULL, '.');
-                token= separarCadena(NULL, ';');
-            }
+            registrarHorario(Narchivo,Narchivo2,C_codigo);
+
         }
 
     }

@@ -16,5 +16,6 @@ void Copiar_cadena(char* destino, const char* origen, int posicion);
 char HTI(char *creditos, char *HTD);
 void formato(char *codigo, char *Nombre_materia, char *HTD, char *HTI, char *creditos, const char *Narchivo);
 int convertir_char_numero(char *numero);
+void registrarHorario(const char *Narchivo, const char *Narchivo2, char C_codigo[8]) ;
 
 #endif // FUNCIONES_H

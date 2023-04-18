@@ -128,3 +128,40 @@ void formato(char *codigo, char *Nombre_materia, char *HTD, char *HTI, char *cre
     delete[] cadena;
     delete[] Registros;
 }
+void registrarHorario(const char *Narchivo, const char *Narchivo2, char C_codigo[8]) {
+    char Horario[10];
+    cout << "Ingrese el horario que tiene la materia:";
+    cin >> Horario;
+    unsigned long long longitud = hallar_len(Narchivo);
+    char *cadena = new char[longitud];
+    leer_archivo(Narchivo, cadena, longitud);
+    char *token = separarCadena(cadena, ';');
+    bool flag = false;
+    while (token != NULL) {
+        if (comparar(token, C_codigo)) {
+            char *arreglo = new char[len_cadena(Horario) + len_cadena(C_codigo) + 2];
+            Copiar_cadena(arreglo, C_codigo, 0);
+            arreglo[len_cadena(C_codigo)] = ';';
+            Copiar_cadena(arreglo, Horario, len_cadena(C_codigo) + 1);
+            arreglo[len_cadena(Horario) + len_cadena(C_codigo) + 1] = '.';
+            arreglo[len_cadena(Horario) + len_cadena(C_codigo) + 2] = '\0';
+            unsigned long long tamano = len_cadena(arreglo);
+            unsigned long long len_archivo = hallar_len(Narchivo2);
+            if (len_archivo == 0)
+                escribirEnArchivo(arreglo, Narchivo2, tamano);
+            else {
+                char *Registros = new char[len_archivo + tamano];
+                leer_archivo(Narchivo2, Registros, len_archivo);
+                Copiar_cadena(Registros, arreglo, len_archivo);
+                escribirEnArchivo(Registros, Narchivo2, tamano + len_archivo);
+            }
+            flag = true;
+            break;
+        }
+        token = separarCadena(NULL, '.');
+        token = separarCadena(NULL, ';');
+    }
+    if (flag == false)
+        cout << "La materia no está registrada" << endl;
+}
+
