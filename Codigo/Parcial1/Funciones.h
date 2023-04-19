@@ -8,14 +8,21 @@ using namespace std;
 
 void leer_archivo(const char *rutaArchivo, char* contenido, unsigned long long longitud);
 unsigned long long hallar_len(const char *texto);
-char* separarCadena(char *cadena, char delimitador);
+char* separarCadena(char *cadenaOriginal, char delimitador);
+char* separarCadena2(char *cadenaOriginal, char delimitador);
 bool comparar(char *cadena1, char *cadena2);
-void escribirEnArchivo(char* texto, char* nombreArchivo, unsigned long long longitud);
+void escribirEnArchivo(char* texto,const char* nombreArchivo, unsigned long long longitud);
 int len_cadena( char *texto);
 void Copiar_cadena(char* destino, const char* origen, int posicion);
 char HTI(char *creditos, char *HTD);
 void formato(char *codigo, char *Nombre_materia, char *HTD, char *HTI, char *creditos, const char *Narchivo);
 int convertir_char_numero(char *numero);
-void registrarHorario(const char *Narchivo, const char *Narchivo2, char C_codigo[8]) ;
+int Posicion_de_Matriz(char Horario);
+int Sacar_Horas(char *cadena, int Hif);
+char *Sacar_dias(char *cadena);
+int Horas(char Horario);
+void registrarHorario(const char *Narchivo, const char *Narchivo2, char C_codigo[8]);
+short Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2);
+void matriz(const char *Narchivo2);
 
 #endif // FUNCIONES_H

@@ -5,8 +5,7 @@ using namespace std;
 int main()
 {
     int opcion = 0;
-    const char *Narchivo="Materias.txt";
-    const char *Narchivo2= "Horario.txt";
+    const char *Narchivo="Materias.txt", *Narchivo2="Horario.txt";
     while (opcion != 4) {
         cout << "Menu de opciones:" << endl;
         cout << "1. Registrar materias" << endl;
@@ -37,9 +36,12 @@ int main()
             cout << "Ingrese el codigo de la materia para registrar el horario:";
             cin >> C_codigo;
             registrarHorario(Narchivo,Narchivo2,C_codigo);
+            break;
+        case 3:
+            matriz(Narchivo2);
+            break;
 
-        }
-
+        }    
     }
     return 0;
 }
