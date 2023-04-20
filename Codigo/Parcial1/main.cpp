@@ -6,6 +6,7 @@ int main()
 {
     int opcion = 0;
     const char *Narchivo="Materias.txt", *Narchivo2="Horario.txt";
+    bool codigo_valido = true;
     while (opcion != 4) {
         cout << "Menu de opciones:" << endl;
         cout << "1. Registrar materias" << endl;
@@ -24,8 +25,25 @@ int main()
             cout << "creditos en la materia teorica y cero en el laboratorio o puedes decir que el laboratorio vale un credito" << endl;
             system("PAUSE");
             system("cls");
-            cout << "Ingrese el codigo de la materia:";
-            cin >> codigo;
+             cout << "Ingrese el codigo de la materia:";
+             cin >> codigo;
+             for (int i = 0; i < len_cadena(codigo); i++) {
+                 if (codigo[i] < '0' || codigo[i] > '9') {
+                     codigo_valido = false;
+                     break;
+                 }
+             }
+             while (!codigo_valido) {
+                 cout << "El codigo debe ser numerico. Por favor intente de nuevo:";
+                 cin >> codigo;
+                 codigo_valido = true;
+                 for (int i = 0; i < len_cadena(codigo); i++) {
+                     if (codigo[i] < '0' || codigo[i] > '9') {
+                         codigo_valido = false;
+                         break;
+                     }
+                 }
+             }
             cout << "Ingrese el nombre de la materia:";
             cin >> Nombre_materia;
             cout << "Ingrese el numero de creditos que contiene la materia:";

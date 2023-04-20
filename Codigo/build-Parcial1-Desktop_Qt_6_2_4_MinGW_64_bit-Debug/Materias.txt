@@ -1,1 +1,1 @@
-2547200;Informatica2;4;5;3.25472000;Lab_info;3;0;1.
+2547200;Informatica2;4;5;3.25472000;Lab_info;3;0;1.2598551;Fisica_estado_solido;4;5;3.2536502;Lab_Integrado;6;0;2.
