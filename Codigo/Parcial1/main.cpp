@@ -17,7 +17,7 @@ int main()
         system("cls");
         switch (opcion) {
         case 1:
-            char codigo[7], Nombre_materia[50], creditos[2], HTD[2], Horas_ind[2];
+            char codigo[8], Nombre_materia[50], creditos[2], HTD[2], Horas_ind[2];
             cout << "Para registrar una materia debes tener en cuenta el codigo, el nombre de la materia, y el numero de creditos" << endl;
             cout << "Ingrese el codigo de la materia:";
             cin >> codigo;
@@ -29,7 +29,9 @@ int main()
             cin >> HTD;
             Horas_ind[0]=HTI(creditos,HTD);
             formato(codigo, Nombre_materia, HTD, Horas_ind, creditos, Narchivo);
+            system("cls");
             cout << "La materia ha sido guardada en la base de datos" << endl;
+            system("PAUSE");
             break;
         case 2:
             char C_codigo[8];
@@ -38,22 +40,39 @@ int main()
             registrarHorario(Narchivo,Narchivo2,C_codigo);
             break;
         case 3:
-            char Matriz_Horario[18][6];
+            char Matriz_Horario[18][6][15];
             for (int fila = 0; fila < 18; fila++) {
                 for (int columna = 0; columna < 6; columna++) {
-                    Matriz_Horario[fila][columna] = '0';
+                    for (int i = 0; i < 15; i++) {
+                        Matriz_Horario[fila][columna][i] = '-';
+                        Matriz_Horario[fila][columna][14] = '\0';
+                    }
                 }
             }
-            matriz(Narchivo2, Matriz_Horario);
-            Sacar_Horas_ind(Narchivo,Narchivo2,Matriz_Horario);
+            matriz(Narchivo, Narchivo2, Matriz_Horario);
+            Sacar_Horas_ind(Narchivo, Narchivo2, Matriz_Horario);
+            cout << "       |\tL\t|\tM\t|\tW\t|\tJ\t|\tV\t|\tS\t|" << endl;
+            cout << "---------------------------------------------------------------------------------------------------------" << endl;
             for (int i = 0; i < 18; i++) {
-                for (int j = 0; j < 6; j++) {
-                    cout << Matriz_Horario[i][j] << " ";
+                cout << (i + 6) << ":00" << ":";
+                if ((i + 6) < 10) {
+                    cout << " ";
                 }
-                cout << endl;
+                for (int j = 0; j < 6; j++) {
+                    cout << " | ";
+                    for (int k = 0; k < 50; k++) {
+                        if (Matriz_Horario[i][j][k] != '\0') {
+                            cout << Matriz_Horario[i][j][k];
+                        }
+                        else {
+                            break;
+                        }
+                    }
+                }
+                cout << " |" << endl;
+                cout << "---------------------------------------------------------------------------------------------------------" << endl;
             }
             break;
-
         }    
     }
     return 0;

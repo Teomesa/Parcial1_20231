@@ -19,9 +19,10 @@ void formato(char *codigo, char *Nombre_materia, char *HTD, char *HTI, char *cre
 int convertir_char_numero(char *numero);
 int Posicion_de_Matriz(char Horario);
 int Sacar_Horas(char *cadena, int Hif);
+char *Sacar_Nombre(const char *Narchivo, char *Codigo);
 char *Sacar_dias(char *cadena);
 int Horas(char Horario);
 void registrarHorario(const char *Narchivo, const char *Narchivo2, char C_codigo[8]);
-void Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2, char (&Matriz_Horario)[18][6]);
-void matriz(const char *Narchivo2, char (&Matriz_Horario)[18][6]);
+void Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2, char (&Matriz_Horario)[18][6][15]);
+void matriz(const char *Narchivo, const char *Narchivo2, char (&Matriz_Horario)[18][6][15]);
 #endif // FUNCIONES_H
