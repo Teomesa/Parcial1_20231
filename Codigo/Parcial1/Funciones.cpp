@@ -206,11 +206,11 @@ void Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2, char (&Matriz_
     unsigned long long len_horario = hallar_len(Narchivo2);
     char *Horario = new char[len_horario+1];
     leer_archivo(Narchivo2, Horario, len_horario);
-    short Horas_ind=0, Horas_estudio_ini=4;
+    short Horas_ind=0, Horas_estudio_ini=2;
     // Inicializar el puntero siguiente para que apunte a la cadena Horario
     char *cod_horario = separarCadena2(Horario, ';');
     char *cod_materia = separarCadena(Materias, ';');
-    int pos_letra=0, Cont_HTI=0, aux=0, n=1;
+    int pos_letra=0, Cont_HTI=0, aux=0;
     char *letra=NULL, Ind[]="Horas_ind_";
     for (; cod_horario != NULL; cod_horario = separarCadena2(NULL, ';')) {
         for (; cod_materia != NULL; cod_materia = separarCadena(NULL, ';')) {
@@ -234,9 +234,9 @@ void Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2, char (&Matriz_
                             }
                             aux=0;
                             Matriz_Horario[Horas_estudio_ini][pos_letra][14] = '\0';
-                            if (pos_letra==5*n){
-                                pos_letra+=7;
-                                n++;
+                            if (pos_letra==5){
+                                Horas_estudio_ini+=2;
+                                pos_letra=0;
                             }
                             else
                                 pos_letra++;
@@ -263,12 +263,21 @@ int Sacar_Horas(char *cadena, int Hif)
     char digitos[2] = {0};
     char *letras = separarCadena2(cadena, '-');
     int cont = 0;
-    if (Hif==1)
+    if (Hif==1){
         letras = separarCadena2(NULL, '\0');
-    for (int i = 0; i < len_cadena(letras); i++) {
-        if (isdigit(letras[i])) {
-            digitos[cont] = letras[i];
-            cont++;
+        for (int i = 0; i < 2; i++) {
+            if (isdigit(letras[i])) {
+                digitos[cont] = letras[i];
+                cont++;
+            }
+        }
+    }
+    else{
+        for (int i = 0; i < len_cadena(letras); i++) {
+            if (isdigit(letras[i])) {
+                digitos[cont] = letras[i];
+                cont++;
+            }
         }
     }
     int Hora=convertir_char_numero(digitos);
@@ -318,9 +327,13 @@ void matriz(const char *Narchivo, const char *Narchivo2, char (&Matriz_Horario)[
     char *Dias_horario = separarCadena(Horario, ';');
     char *Nombre_Materia = Sacar_Nombre(Narchivo,Dias_horario);
     Dias_horario = separarCadena(NULL, '.');
+    int pos_imprimir_in = 0;
     while (Dias_horario != NULL){
         int len_n_materia=len_cadena(Nombre_Materia);
-        int pos_imprimir=14/len_n_materia;
+        if (len_n_materia<10)
+            pos_imprimir_in = static_cast<int>((14 / static_cast<float>(len_n_materia)) + 0.5);
+        else
+            pos_imprimir_in = 0;
         char *Dias=Sacar_dias(Dias_horario);
         len_horario=len_cadena(Dias_horario);
         for (int i=0;i<len_cadena(Dias);i++){
@@ -334,9 +347,9 @@ void matriz(const char *Narchivo, const char *Narchivo2, char (&Matriz_Horario)[
                 Hora_final-=6;
                 for (int j=Hora_inicial;j<Hora_final;j++){
                     for (int k = 0; k < 15; k++) {
-                        if (k+1>=2*len_n_materia)
+                        if (aux==len_n_materia)
                             Matriz_Horario[j][Pos_dia_matriz][k] = ' ';
-                        else if (k<pos_imprimir)
+                        else if (k<pos_imprimir_in)
                             Matriz_Horario[j][Pos_dia_matriz][k] = ' ';
                         else{
                             Matriz_Horario[j][Pos_dia_matriz][k] = Nombre_Materia[aux];
@@ -352,6 +365,10 @@ void matriz(const char *Narchivo, const char *Narchivo2, char (&Matriz_Horario)[
         if (Dias_horario!=NULL){
             Nombre_Materia = Sacar_Nombre(Narchivo,Dias_horario);
             Dias_horario = separarCadena(NULL, '.');
+        }
+        if (Nombre_Materia==NULL){
+            cout << "Hay una materia que no esta registrada, registrala para que aparezca en el horario. " << endl;
+            break;
         }
     }
     delete[] Horario;

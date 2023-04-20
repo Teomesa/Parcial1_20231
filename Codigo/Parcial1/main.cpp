@@ -19,6 +19,11 @@ int main()
         case 1:
             char codigo[8], Nombre_materia[50], creditos[2], HTD[2], Horas_ind[2];
             cout << "Para registrar una materia debes tener en cuenta el codigo, el nombre de la materia, y el numero de creditos" << endl;
+            cout << "Si una materia cuenta con laboratorio, deberas registrarla con un codigo diferente al de la materia teorica," << endl;
+            cout << "Este codigo puede ser inventado, pero ten en cuenta que los creditos cambiaran, puedes poner todos los" << endl;
+            cout << "creditos en la materia teorica y cero en el laboratorio o puedes decir que el laboratorio vale un credito" << endl;
+            system("PAUSE");
+            system("cls");
             cout << "Ingrese el codigo de la materia:";
             cin >> codigo;
             cout << "Ingrese el nombre de la materia:";
@@ -32,12 +37,16 @@ int main()
             system("cls");
             cout << "La materia ha sido guardada en la base de datos" << endl;
             system("PAUSE");
+            system("cls");
             break;
         case 2:
             char C_codigo[8];
             cout << "Ingrese el codigo de la materia para registrar el horario:";
             cin >> C_codigo;
             registrarHorario(Narchivo,Narchivo2,C_codigo);
+            cout << "El horario ha sido guardado exitosamente" << endl;
+            system("PAUSE");
+            system("cls");
             break;
         case 3:
             char Matriz_Horario[18][6][15];
@@ -51,8 +60,8 @@ int main()
             }
             matriz(Narchivo, Narchivo2, Matriz_Horario);
             Sacar_Horas_ind(Narchivo, Narchivo2, Matriz_Horario);
-            cout << "       |\tL\t|\tM\t|\tW\t|\tJ\t|\tV\t|\tS\t|" << endl;
-            cout << "---------------------------------------------------------------------------------------------------------" << endl;
+            cout << "       |       L        |       M        |       W        |        J       |        V       |         S      |" << endl;
+            cout << "--------------------------------------------------------------------------------------------------------------" << endl;
             for (int i = 0; i < 18; i++) {
                 cout << (i + 6) << ":00" << ":";
                 if ((i + 6) < 10) {
@@ -70,8 +79,10 @@ int main()
                     }
                 }
                 cout << " |" << endl;
-                cout << "---------------------------------------------------------------------------------------------------------" << endl;
+                cout << "--------------------------------------------------------------------------------------------------------------" << endl;
             }
+            system("PAUSE");
+            system("cls");
             break;
         }    
     }
