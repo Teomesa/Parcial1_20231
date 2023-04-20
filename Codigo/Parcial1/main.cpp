@@ -38,7 +38,20 @@ int main()
             registrarHorario(Narchivo,Narchivo2,C_codigo);
             break;
         case 3:
-            matriz(Narchivo2);
+            char Matriz_Horario[18][6];
+            for (int fila = 0; fila < 18; fila++) {
+                for (int columna = 0; columna < 6; columna++) {
+                    Matriz_Horario[fila][columna] = '0';
+                }
+            }
+            matriz(Narchivo2, Matriz_Horario);
+            Sacar_Horas_ind(Narchivo,Narchivo2,Matriz_Horario);
+            for (int i = 0; i < 18; i++) {
+                for (int j = 0; j < 6; j++) {
+                    cout << Matriz_Horario[i][j] << " ";
+                }
+                cout << endl;
+            }
             break;
 
         }    

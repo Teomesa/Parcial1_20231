@@ -196,7 +196,7 @@ void registrarHorario(const char *Narchivo, const char *Narchivo2, char C_codigo
         cout << "La materia no está registrada" << endl;
 }
 
-short Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2)
+void Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2, char (&Matriz_Horario)[18][6])
 {
     unsigned long long len_materias = hallar_len(Narchivo);
     char *Materias = new char[len_materias];
@@ -204,11 +204,12 @@ short Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2)
     unsigned long long len_horario = hallar_len(Narchivo2);
     char *Horario = new char[len_horario];
     leer_archivo(Narchivo2, Horario, len_horario);
-    int Horas_ind=0;
+    short Horas_ind=0, Horas_estudio_ini=4;
     // Inicializar el puntero siguiente para que apunte a la cadena Horario
     char *cod_horario = separarCadena2(Horario, ';');
     char *cod_materia = separarCadena(Materias, ';');
-
+    char letra='A';
+    int pos_letra=0, Cont_HTI=0;
     for (; cod_horario != NULL; cod_horario = separarCadena2(NULL, ';')) {
         for (; cod_materia != NULL; cod_materia = separarCadena(NULL, ';')) {
             if (comparar(cod_horario, cod_materia)) {
@@ -216,6 +217,20 @@ short Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2)
                     cod_materia = separarCadena(NULL, ';');
                 }
                 Horas_ind = convertir_char_numero(cod_materia);
+                for (;pos_letra<108;pos_letra++){
+                    Cont_HTI=0;
+                    while (Cont_HTI<Horas_ind){
+                        if (Matriz_Horario[Horas_estudio_ini][pos_letra]=='0'){
+                            Matriz_Horario[Horas_estudio_ini][pos_letra]=letra;
+                            pos_letra++;
+                            Cont_HTI++;
+                        }
+                        else
+                            pos_letra++;
+                    }
+                    letra++;
+                    break;
+                }
                 cod_materia = separarCadena(Materias, ';'); // Reiniciar el puntero cod_materia
                 break;
             }
@@ -223,7 +238,6 @@ short Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2)
         }
         cod_horario = separarCadena2(NULL, '.');
     }
-    return 0;
 }
 
 int Sacar_Horas(char *cadena, int Hif)
@@ -256,9 +270,6 @@ char* Sacar_dias(char* cadena) {
     return letras;
 }
 
-
-
-
 int Posicion_de_Matriz(char Horario)
 {
     switch (Horario) {
@@ -280,21 +291,15 @@ int Posicion_de_Matriz(char Horario)
 
 }
 
-void matriz(const char *Narchivo2)
+void matriz(const char *Narchivo2, char (&Matriz_Horario)[18][6])
 {
     unsigned long long len_horario = hallar_len(Narchivo2);
     char *Horario = new char[len_horario];
     int Hora_inicial, Hora_final, Pos_dia_matriz, cont=0;
     leer_archivo(Narchivo2, Horario, len_horario);
-    char Matriz_Horario[18][6];
-    for (int fila = 0; fila < 18; fila++) {
-        for (int columna = 0; columna < 6; columna++) {
-            Matriz_Horario[fila][columna] = '0';
-        }
-    }
     char *Dias_horario = separarCadena(Horario, ';');
+    Dias_horario = separarCadena(NULL, '.');
     while (Dias_horario != NULL){
-        Dias_horario = separarCadena(NULL, '.');
         char *Dias=Sacar_dias(Dias_horario);
         len_horario=len_cadena(Dias_horario);
         for (int i=0;i<len_cadena(Dias);i++){
@@ -312,12 +317,7 @@ void matriz(const char *Narchivo2)
             }
         }
         Dias_horario = separarCadena(NULL, ';');
-    }
-    for (int i = 0; i < 18; i++) {
-        for (int j = 0; j < 6; j++) {
-            cout << Matriz_Horario[i][j] << " ";
-        }
-        cout << endl;
+        Dias_horario = separarCadena(NULL, '.');
     }
 }
 

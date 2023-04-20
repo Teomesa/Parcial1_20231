@@ -22,7 +22,6 @@ int Sacar_Horas(char *cadena, int Hif);
 char *Sacar_dias(char *cadena);
 int Horas(char Horario);
 void registrarHorario(const char *Narchivo, const char *Narchivo2, char C_codigo[8]);
-short Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2);
-void matriz(const char *Narchivo2);
-
+void Sacar_Horas_ind(const char *Narchivo, const char *Narchivo2, char (&Matriz_Horario)[18][6]);
+void matriz(const char *Narchivo2, char (&Matriz_Horario)[18][6]);
 #endif // FUNCIONES_H
